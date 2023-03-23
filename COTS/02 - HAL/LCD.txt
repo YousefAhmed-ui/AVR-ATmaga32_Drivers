@@ -1,0 +1,138 @@
+
+
+
+write command()
+{
+    /*rs  0*/
+
+    /*R/w  0*/
+
+    /*send Data */
+
+    /*enable*/
+}
+write command(Display On)
+{
+    D = 1
+}
+
+Write Command(DisplayClear)
+{
+    
+}
+LCD_Init()
+{
+    functionSet()
+    {
+        0b00111000 // initialization
+    }
+    DisplayOn/Off()
+    {
+        
+        C = 0; //cursor
+        B = 1; //blink
+    }
+
+}
+
+Goto(x,y)
+{
+    if(x == firstLine)
+    {
+        location = y;
+    }
+    else if(x == SecondLine )
+    {
+    location = 0x40 + y;
+    }
+    writeCommand(128 + location);   
+}
+
+writeSpecialCharacter(u8 *pattern ,u8 Block ,u8 x ,u8 y )
+{
+    /*get the address in cgram*/
+    u8 loc_address = Block * 8 ;
+    /* move the address counter to cgram*/
+    writeCommand(loc_address + 64);
+    for(iter = 0 ; iter < 8 ; iter++) 
+    {
+        writeData(pattern[iterator]);
+    }
+    /*move address counter to ddram*/
+    gotoXY(x,y);
+    /*Display*/
+    writedata(Block);
+
+
+}
+
+
+
+
+writeData(u8 Data);
+WriteCommand(Command);
+Init();
+GotoXY(X , Y);
+Display SpecialCahar(*Pattern , Block , x,y);
+WriteString(char * Str);
+WriteNum(150);
+
+
+
+
+
+
+
+
+
+
+
+config.h 
+{
+	struct {}
+}
+
+
+Sev_seg [object]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
