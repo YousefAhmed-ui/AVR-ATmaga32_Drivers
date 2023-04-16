@@ -95,55 +95,40 @@ SPI_Error_t spi_Init(SPI_cfg_t* Config )
 }
 
 
-SPI_Error_t spi_SendByteSynch(u8 Copy_u8Byte)
+SPI_Error_t spi_TranscieveByteSynch(u8 Copy_u8SendByte , u8* Copy_u8RecieveByte)
 {
     SPI_Error_t Local_enuErrorStatus = spi_Ok;
 
     u16 Local_u16Timeout = 0;
 
-    SPI->SPDR = Copy_u8Byte;
+    if(Copy_u8RecieveByte == NULL){
 
-    while((!(SPI->SPSR) & (1 << SPIF)) && (Local_u16Timeout < 1000)){
+        Local_enuErrorStatus = spi_NullPtr;
 
-        Local_u16Timeout++;
+    }else{
 
-        if(Local_u16Timeout == 1000){
+        SPI->SPDR = Copy_u8SendByte;
 
-            Local_enuErrorStatus = spi_TimeOut;
+        while((!(SPI->SPSR) & (1 << SPIF)) && (Local_u16Timeout < 1000)){
+
+            Local_u16Timeout++;
+
+            if(Local_u16Timeout == 1000){
+
+                Local_enuErrorStatus = spi_TimeOut;
+
+            }
 
         }
 
-    }
+        *Copy_u8RecieveByte = SPI->SPDR;
 
+    }
     return Local_enuErrorStatus;
 
 }
 
-SPI_Error_t spi_RecieveByteSynch(u8* Copy_u8Byte)
-{
-    SPI_Error_t Local_enuErrorStatus = spi_Ok;
 
-    u16 Local_u16Timeout = 0;
-
-    while((!(SPI->SPSR) & (1 << SPIF)) && (Local_u16Timeout < 1000)){
-
-        Local_u16Timeout++;
-
-        if(Local_u16Timeout == 1000){
-
-            Local_enuErrorStatus = spi_TimeOut;
-
-        }
-
-    
-
-    }
-
-    *Copy_u8Byte = SPI->SPDR;
-
-    return Local_enuErrorStatus;
-
-}    
 
 SPI_Error_t spi_SendBufferAsynch(SPI_Send_t* Buffer)
 {

@@ -99,25 +99,13 @@ extern SPI_Error_t spi_Init(SPI_cfg_t* Config );
 /* Inputs  :                                                                                                             */
 /* Return :                                                                                                              */
 /*************************************************************************************************************************/
-extern SPI_Error_t spi_SendByteSynch(u8 Copy_u8Byte);
+extern SPI_Error_t spi_TranscieveByteSynch(u8 Copy_u8SendByte , u8* Copy_u8RecieveByte);
 /*************************************************************************************************************************/
 /* FunctionDiscription  :                                                                                                */
 /* Inputs  :                                                                                                             */
 /* Return :                                                                                                              */
 /*************************************************************************************************************************/
-extern SPI_Error_t spi_RecieveByteSynch(u8* Copy_u8Byte);
-/*************************************************************************************************************************/
-/* FunctionDiscription  :                                                                                                */
-/* Inputs  :                                                                                                             */
-/* Return :                                                                                                              */
-/*************************************************************************************************************************/
-extern SPI_Error_t spi_SendBufferAsynch(SPI_Send_t* Buffer);
-/*************************************************************************************************************************/
-/* FunctionDiscription  :                                                                                                */
-/* Inputs  :                                                                                                             */
-/* Return :                                                                                                              */
-/*************************************************************************************************************************/
-extern SPI_Error_t spi_RecieveBufferAsynch(SPI_Recieve_t* Buffer);
+extern SPI_Error_t spi_TranscieveBufferAsynch(SPI_Send_t* SendBuffer , SPI_Recieve_t RecieveBuffer);
 /*************************************************************************************************************************/
 /* FunctionDiscription  :                                                                                                */
 /* Inputs  :                                                                                                             */
