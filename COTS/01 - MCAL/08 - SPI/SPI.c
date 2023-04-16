@@ -187,9 +187,9 @@ ISR_ITI(SPI_STC)
 
         if( TranscieveIndex < TranscieveSize ){
 
-            SPI->SPDR = SendBuffer[TranscieveIndex];
-
             RecieveBuffer[TranscieveIndex] = SPI->SPDR;
+
+            SPI->SPDR = SendBuffer[TranscieveIndex];
 
             TranscieveIndex++;
 
