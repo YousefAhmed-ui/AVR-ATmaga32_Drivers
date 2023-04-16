@@ -59,19 +59,11 @@ typedef enum{
 
 typedef struct{
 
-    u8* Sendbuffer;
-    u8 BufferIndex;
-    u8 BufferSize;
+    u8* Transcievebuffer;
+    u8 TranscieveIndex;
+    u8 TranscieveSize;
 
-}SPI_Send_t;
-
-typedef struct{
-
-    u8* Recievebuffer;
-    u8 BufferIndex;
-    u8 BufferSize;
-
-}SPI_Recieve_t;
+}SPI_Trancieve_t;
 
 typedef struct{
 

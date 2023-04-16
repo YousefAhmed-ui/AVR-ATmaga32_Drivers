@@ -122,7 +122,7 @@ SPI_Error_t spi_TranscieveByteSynch(u8 Copy_u8SendByte , u8* Copy_u8RecieveByte)
 
 
 
-SPI_Error_t spi_TranscieveBufferAsynch(SPI_Send_t* TranscieveCfg )
+SPI_Error_t spi_TranscieveBufferAsynch(SPI_Trancieve_t* TranscieveCfg )
 {
     SPI_Error_t Local_enuErrorStatus = spi_Busy;
 
@@ -134,11 +134,11 @@ SPI_Error_t spi_TranscieveBufferAsynch(SPI_Send_t* TranscieveCfg )
 
         if(TranscieveBusyFlag == spi_Idle){
 
-            TranscieveBuffer = TranscieveCfg->Sendbuffer;
+            TranscieveBuffer = TranscieveCfg->Transcievebuffer;
 
-            TranscieveIndex = TranscieveCfg->BufferIndex;
+            TranscieveIndex = TranscieveCfg->TranscieveIndex;
 
-            TranscieveSize = TranscieveCfg->BufferSize;
+            TranscieveSize = TranscieveCfg->TranscieveSize;
 
             TranscieveBusyFlag = spi_Busy;
 
