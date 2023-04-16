@@ -26,22 +26,14 @@ typedef struct{
 
 
 
-static SPI_State_t SendBusyFlag;
+static SPI_State_t TranscieveBusyFlag;
 
-static u8* SendBuffer;
+static u8* TranscieveBuffer;
  
-static u8 SendBufferIndex;
+static u8 TranscieveIndex;
  
-static u8 SendBufferSize;
+static u8 TranscieveSize;
  
-
-static SPI_State_t RecieveBusyFlag;
-
-static u8* RecieveBuffer;
- 
-static u8 RecieveBufferIndex;
- 
-static u8 RecieveBufferSize;
  
 static SPI_cbf CallBack;
 
@@ -130,29 +122,29 @@ SPI_Error_t spi_TranscieveByteSynch(u8 Copy_u8SendByte , u8* Copy_u8RecieveByte)
 
 
 
-SPI_Error_t spi_SendBufferAsynch(SPI_Send_t* Buffer)
+SPI_Error_t spi_TranscieveBufferAsynch(SPI_Send_t* TranscieveCfg )
 {
     SPI_Error_t Local_enuErrorStatus = spi_Busy;
 
-    if(Buffer == NULL){
+    if( TranscieveCfg == NULL){
 
         Local_enuErrorStatus = spi_NullPtr;
 
     }else{
 
-        if(SendBusyFlag == spi_Idle){
+        if(TranscieveBusyFlag == spi_Idle){
 
-            SendBuffer = Buffer->Sendbuffer;
+            TranscieveBuffer = TranscieveCfg->Sendbuffer;
 
-            SendBufferIndex = Buffer->BufferIndex;
+            TranscieveIndex = TranscieveCfg->BufferIndex;
 
-            SendBufferSize = Buffer->BufferSize;
+            TranscieveSize = TranscieveCfg->BufferSize;
 
-            SendBusyFlag = spi_Busy;
+            TranscieveBusyFlag = spi_Busy;
 
             SPI->SPDR |= interrupt;
 
-            SendBufferIndex++;
+            TranscieveIndex++;
 
             Local_enuErrorStatus = spi_Ok;
 
@@ -187,21 +179,23 @@ SPI_Error_t spi_SetCallBackFunction(SPI_cbf CallBackFunction)
 
 ISR_ITI(SPI_STC)
 {
-    if(SPI->SPDR & spi_MASTER_SELECT){
+    if((SPI->SPDR) & (1<<SPIF)){
 
-        if( SendBufferIndex < SendBufferSize ){
+        if( TranscieveIndex < TranscieveSize ){
 
-            SPI->SPDR = SendBuffer[SendBufferIndex];
+            SPI->SPDR = TranscieveBuffer[TranscieveIndex];
 
-            SendBufferIndex++;
+            TranscieveBuffer[TranscieveIndex] = SPI->SPDR;
+
+            TranscieveIndex++;
 
             SPI->SPSR &= ~(1<<SPIF);
 
         }else{
 
-            SendBusyFlag = spi_Idle;
+            TranscieveBusyFlag = spi_Idle;
 
-            SendBufferSize = 0;
+            TranscieveSize = 0;
 
             SPI->SPSR &= ~(1<<SPIF);
 

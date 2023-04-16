@@ -105,7 +105,7 @@ extern SPI_Error_t spi_TranscieveByteSynch(u8 Copy_u8SendByte , u8* Copy_u8Recie
 /* Inputs  :                                                                                                             */
 /* Return :                                                                                                              */
 /*************************************************************************************************************************/
-extern SPI_Error_t spi_TranscieveBufferAsynch(SPI_Send_t* SendBuffer , SPI_Recieve_t RecieveBuffer);
+extern SPI_Error_t spi_TranscieveBufferAsynch(SPI_Send_t* SendBuffer , SPI_Recieve_t* RecieveBuffer);
 /*************************************************************************************************************************/
 /* FunctionDiscription  :                                                                                                */
 /* Inputs  :                                                                                                             */
