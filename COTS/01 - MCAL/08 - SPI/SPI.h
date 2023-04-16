@@ -59,9 +59,10 @@ typedef enum{
 
 typedef struct{
 
-    u8* Transcievebuffer;
-    u8 TranscieveIndex;
-    u8 TranscieveSize;
+    u8* Sendbuffer;
+    u8* RecieveBuffer;
+    u8 Index;
+    u8 Length;
 
 }SPI_Trancieve_t;
 
@@ -97,7 +98,7 @@ extern SPI_Error_t spi_TranscieveByteSynch(u8 Copy_u8SendByte , u8* Copy_u8Recie
 /* Inputs  :                                                                                                             */
 /* Return :                                                                                                              */
 /*************************************************************************************************************************/
-extern SPI_Error_t spi_TranscieveBufferAsynch(SPI_Send_t* SendBuffer , SPI_Recieve_t* RecieveBuffer);
+extern SPI_Error_t spi_TranscieveBufferAsynch(SPI_Trancieve_t* TranscieveCfg )
 /*************************************************************************************************************************/
 /* FunctionDiscription  :                                                                                                */
 /* Inputs  :                                                                                                             */

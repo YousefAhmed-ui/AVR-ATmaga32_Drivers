@@ -28,7 +28,9 @@ typedef struct{
 
 static SPI_State_t TranscieveBusyFlag;
 
-static u8* TranscieveBuffer;
+static u8* SendBuffer;
+
+static u8* RecieveBuffer;
  
 static u8 TranscieveIndex;
  
@@ -134,11 +136,13 @@ SPI_Error_t spi_TranscieveBufferAsynch(SPI_Trancieve_t* TranscieveCfg )
 
         if(TranscieveBusyFlag == spi_Idle){
 
-            TranscieveBuffer = TranscieveCfg->Transcievebuffer;
+            SendBuffer = TranscieveCfg->Sendbuffer;
 
-            TranscieveIndex = TranscieveCfg->TranscieveIndex;
+            RecieveBuffer = TranscieveCfg->RecieveBuffer;
 
-            TranscieveSize = TranscieveCfg->TranscieveSize;
+            TranscieveSize = TranscieveCfg->Length;
+
+            TranscieveIndex = TranscieveCfg->Index;
 
             TranscieveBusyFlag = spi_Busy;
 
@@ -183,9 +187,9 @@ ISR_ITI(SPI_STC)
 
         if( TranscieveIndex < TranscieveSize ){
 
-            SPI->SPDR = TranscieveBuffer[TranscieveIndex];
+            SPI->SPDR = SendBuffer[TranscieveIndex];
 
-            TranscieveBuffer[TranscieveIndex] = SPI->SPDR;
+            RecieveBuffer[TranscieveIndex] = SPI->SPDR;
 
             TranscieveIndex++;
 
